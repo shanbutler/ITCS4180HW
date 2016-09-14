@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Expense App</string>
+    <string name="finishText">Finish</string>
+    <string name="showExpenseText">Show Expense</string>
+    <string name="deleteExpenseText">Delete Expense</string>
+    <string name="editExpenseButton">Edit Expense</string>
+    <string name="addExpenseButton">Add Expense</string>
+    <string name="title_activity_add_expense">Add Expense</string>
+    <string name="title_activity_edit_expense">Edit Expense</string>
+    <string name="title_activity_delete_expense">Delete Expense</string>
+    <string name="title_activity_show_expenses">Show Expenses</string>
+    <string name="addTitle">Add an Expense</string>
+    <string name="expName">Expense Name</string>
+    <string name="category">Category</string>
+    <string name="amountText">Amount</string>
+    <string name="dateText">Date</string>
+
+    // spinner array; drop down for categories of expenses
+    <string-array name="expense_categories">
+        <item>Select Category</item>
+        <item>Groceries</item>
+        <item>Invoice</item>
+        <item>Transportation</item>
+        <item>Shopping</item>
+        <item>Rent</item>
+        <item>Trips</item>
+        <item>Utilities</item>
+        <item>Other</item>
+    </string-array>
+</resources>
