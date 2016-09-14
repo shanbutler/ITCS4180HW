@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         if(getIntent().getExtras() != null){
             exp = getIntent().getParcelableExtra("NEW_EXPENSE");
             expObjList[numExpenses].add(exp);
+            numExpenses++;
 
         }
 
@@ -71,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
         editExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // send arraylist of expense names
+                //String[] expNames = new String[expObjList.length];
+                //for(int i = 0; i < expObjList.length; i++){
+                //    expNames[i] = expObjList[i].getName();
+
+                //}
+
+                editIntent.putExtra("EXPENSES_LIST", expObjList);
                 startActivity(editIntent);
             }
         });

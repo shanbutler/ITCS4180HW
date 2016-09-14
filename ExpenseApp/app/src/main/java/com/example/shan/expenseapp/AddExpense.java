@@ -90,8 +90,10 @@ public class AddExpense extends AppCompatActivity {
 
                 Intent returnMain = new Intent(AddExpense.this, MainActivity.class);
                 Expense e = new Expense(name, category, amount, date, uri);
+                Bundle b = new Bundle();
+                b.putParcelable("NEW_EXPENSE", e);
                 startActivity(returnMain);
-                returnMain.putExtra("NEW_EXPENSE", e);
+                returnMain.putExtras(b);
 
             }
         });

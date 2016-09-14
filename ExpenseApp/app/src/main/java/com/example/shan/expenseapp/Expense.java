@@ -29,8 +29,11 @@ public class Expense implements Parcelable{
         this.uri = u;
     }
 
+    public String getName(){
+        return name;
+    }
     public Expense(Parcel in){
-
+        readFromParcel(in);
 
     }
 
@@ -48,6 +51,16 @@ public class Expense implements Parcelable{
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public void readFromParcel(Parcel in)
+    {
+        name = in.readString();
+        category = in.readString();
+        amount = in.readDouble();
+        date = in.readString();
+        String u = uri.toString();
+        u = in.readString();
     }
 
     @Override

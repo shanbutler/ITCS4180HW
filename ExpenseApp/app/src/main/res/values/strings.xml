@@ -16,6 +16,9 @@
     <string name="dateText">Date</string>
     <string name="receipt">Receipt</string>
     <string name="addExpT">Add Expense</string>
+    <string name="selExpenseText">Select Expense</string>
+    <string name="saveText">Save</string>
+    <string name="cancelText">Cancel</string>
 
     // spinner array; drop down for categories of expenses
     <string-array name="expense_categories">
