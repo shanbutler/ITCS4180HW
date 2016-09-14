@@ -42,7 +42,7 @@ public class Expense implements Parcelable{
             return new Expense[size];
         }
 
-    }
+    };
 
 
     @Override

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         final Intent editIntent = new Intent(MainActivity.this, EditExpense.class);
         final Intent deleteIntent = new Intent(MainActivity.this, DeleteExpense.class);
         final Intent showIntent = new Intent(MainActivity.this, ShowExpenses.class);
-        final Intent retrieve = getIntent();
+        //final Intent retrieve = getIntent(AddExpense.class, MainActivity.this);
 
         // go to Home screen
         final Intent finish = new Intent(Intent.ACTION_MAIN);

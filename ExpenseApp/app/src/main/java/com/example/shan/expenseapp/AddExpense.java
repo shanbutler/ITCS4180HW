@@ -41,7 +41,7 @@ public class AddExpense extends AppCompatActivity {
     public double amount;
     public Uri uri;
 
-    final Intent returnMain = new Intent(AddExpense.this, MainActivity.class);
+
 
 
     @Override
@@ -60,7 +60,7 @@ public class AddExpense extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         // use date picker dialog
-        dateView = (TextView) findViewById(R.id.textView3);
+        dateView = (EditText) findViewById(R.id.dateView);
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
 
@@ -71,6 +71,7 @@ public class AddExpense extends AppCompatActivity {
         addExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent returnMain = new Intent(AddExpense.this, MainActivity.class);
                 Expense e = new Expense(name, category, amount, date, uri);
                 startActivity(returnMain);
                 returnMain.putExtra("NEW_EXPENSE", e);
@@ -84,8 +85,7 @@ public class AddExpense extends AppCompatActivity {
         @SuppressWarnings("deprecation")
         public void setDate(View view) {
             showDialog(999);
-            //Toast.makeText(getApplicationContext(), "ca", Toast.LENGTH_SHORT)
-             //       .show();
+
         }
 
         @Override
