@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
     Button showExpButton;
     Button finishButton;
 
-    ArrayList<Object> expObjList[];
+    ArrayList<Expense> expObjList[];
+    int numExpenses = 0;
+    Expense exp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +41,19 @@ public class MainActivity extends AppCompatActivity {
         final Intent editIntent = new Intent(MainActivity.this, EditExpense.class);
         final Intent deleteIntent = new Intent(MainActivity.this, DeleteExpense.class);
         final Intent showIntent = new Intent(MainActivity.this, ShowExpenses.class);
+        final Intent retrieve = getIntent();
 
         // go to Home screen
         final Intent finish = new Intent(Intent.ACTION_MAIN);
         finish.addCategory(Intent.CATEGORY_HOME);
         finish.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+        // retrieve expenses
+        if(getIntent().getExtras() != null){
+            exp = getIntent().getParcelableExtra("NEW_EXPENSE");
+            expObjList[numExpenses].add(exp);
+
+        }
 
 
         addExpButton.setOnClickListener(new View.OnClickListener() {
