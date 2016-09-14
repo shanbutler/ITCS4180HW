@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.Serializable;
@@ -25,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     Button deleteExpButton;
     Button showExpButton;
     Button finishButton;
-
-    ArrayList<Expense> expObjList[];
+    //Intent in;
+    ArrayList<Expense> expObjList = new ArrayList<Expense>();
     int numExpenses = 0;
     Expense exp;
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //expObjList.add(new Expense("Shan", "Groceries", 0.0, "6/27/1987"));
         // doesn't work
         addPicToGallery(MainActivity.this, "@drawable/receipt1");
 
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         final Intent editIntent = new Intent(MainActivity.this, EditExpense.class);
         final Intent deleteIntent = new Intent(MainActivity.this, DeleteExpense.class);
         final Intent showIntent = new Intent(MainActivity.this, ShowExpenses.class);
+        //final Intent fromAdd = getIntent();
 
 
         // go to Home screen
@@ -56,10 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
         // retrieve expenses
         if(getIntent().getExtras() != null){
-            exp = getIntent().getParcelableExtra("NEW_EXPENSE");
-            expObjList[numExpenses].add(exp);
+            //in.getParcelableExtra("NEW_EXPENSE");
+            //Bundle b = new Bundle();
+            //b = getIntent().getExtras();
+            //exp = b.get("NEW_EXPENSE");
+            exp = getIntent().getExtras().getParcelable("NEW_EXPENSE");
+            //exp = getIntent().getParcelableExtra("NEW_EXPENSE");
+            expObjList.add(exp);
             numExpenses++;
-
+            Log.d("demo", "received expense");
         }
 
 
@@ -72,15 +81,15 @@ public class MainActivity extends AppCompatActivity {
         editExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // send arraylist of expense names
-                //String[] expNames = new String[expObjList.length];
-                //for(int i = 0; i < expObjList.length; i++){
-                //    expNames[i] = expObjList[i].getName();
+                if(expObjList != null){
+                    editIntent.putExtra("EXPENSES_LIST", expObjList);
+                    startActivity(editIntent);
+                }
+                else{
+                    // error, no expense
+                    Toast.makeText(MainActivity.this, "No expenses", Toast.LENGTH_SHORT).show();
+                }
 
-                //}
-
-                editIntent.putExtra("EXPENSES_LIST", expObjList);
-                startActivity(editIntent);
             }
         });
         deleteExpButton.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+// this don't work
     public static void addPicToGallery(Context context, String photoPath) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(photoPath);

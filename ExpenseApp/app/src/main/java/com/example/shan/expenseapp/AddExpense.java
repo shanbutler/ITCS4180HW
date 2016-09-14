@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -80,20 +82,43 @@ public class AddExpense extends AppCompatActivity {
         addExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name = expName.getText().toString();
-                category = spinner.getSelectedItem().toString();
-                amount = Double.parseDouble(expAmount.getText().toString());
-                date = dateView.getText().toString();
-                // no idea how to do uri
-                uri = Uri.parse("file://drawable/receipt1.gif");
 
+                    name = expName.getText().toString();
+                    category = spinner.getSelectedItem().toString();
+                if(expAmount.getText().toString() != ""){
+                    amount = Double.parseDouble(expAmount.getText().toString());
+                }
+                else{
+                    amount = 0.0;
+                }
 
+                    date = dateView.getText().toString();
+                    // no idea how to do uri
+                    uri = Uri.parse("file://drawable/receipt1.gif");
+
+            if(name != null){
                 Intent returnMain = new Intent(AddExpense.this, MainActivity.class);
-                Expense e = new Expense(name, category, amount, date, uri);
-                Bundle b = new Bundle();
-                b.putParcelable("NEW_EXPENSE", e);
+                // add in uri
+                Expense e = new Expense(name, category, amount, date);
+                    /*//Bundle b = new Bundle();
+                    //b.putParcelable("NEW_EXPENSE", e);
+                    ArrayList<Expense> expArray = new ArrayList<Expense>();
+                    expArray.add(e);
+                    startActivity(returnMain);
+                    //returnMain.putExtras(b);
+                    //returnMain.putParcelableExtra(e);
+                    returnMain.putExtras(expArray);*/
+
+                returnMain.putExtra("NEW_EXPENSE", e);
                 startActivity(returnMain);
-                returnMain.putExtras(b);
+
+
+                    Log.d("demo", e.toString());
+                }
+
+                else{
+                    Toast.makeText(AddExpense.this, "Invalid field", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

@@ -20,24 +20,27 @@ public class Expense implements Parcelable{
     public double amount;
     public Uri uri;
 
-    public Expense(String n, String c, double a, String d, Uri u)
+    // add uri later
+    public Expense(String n, String c, double a, String d)
     {
         this.name = n;
         this.category = c;
         this.amount = a;
         this.date = d;
-        this.uri = u;
+        //this.uri = u;
     }
 
-    public String getName(){
-        return name;
+    @Override
+    public String toString(){
+        String str = name + " " + category;
+        return str;
     }
     public Expense(Parcel in){
         readFromParcel(in);
 
     }
 
-    public Parcelable.Creator CREATOR = new Parcelable.Creator(){
+    public static Parcelable.Creator CREATOR = new Parcelable.Creator(){
         public Expense createFromParcel(Parcel source) {
             return new Expense(source);
         }
@@ -59,8 +62,8 @@ public class Expense implements Parcelable{
         category = in.readString();
         amount = in.readDouble();
         date = in.readString();
-        String u = uri.toString();
-        u = in.readString();
+        //String u = uri.toString();
+        //u = in.readString();
     }
 
     @Override
@@ -70,7 +73,7 @@ public class Expense implements Parcelable{
         dest.writeString(category);
         dest.writeDouble(amount);
         dest.writeString(date);
-        dest.writeString(String.valueOf(uri));
+        //dest.writeString(String.valueOf(uri));
 
 
     }

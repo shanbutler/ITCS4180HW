@@ -21,6 +21,7 @@ public class EditExpense extends MainActivity {
     ArrayList<Expense> expenses = new ArrayList<>();
     //String[] stringExp = new String[];
     Bundle b = new Bundle();
+    String[] expNames;
 
     Intent main;
     @Override
@@ -42,6 +43,10 @@ public class EditExpense extends MainActivity {
             //String[] expList;
 
 
+            expNames = new String[expenses.size()];
+            for(int i = 0; i < expenses.size(); i++){
+                expNames[i] = (String) expenses.get(i).name;
+            }
 
         }
 
@@ -50,19 +55,22 @@ public class EditExpense extends MainActivity {
         selectExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(EditExpense.this)
-                        .setTitle("Expenses")
-                        .setItems(expenses, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int item) {
-                                // Do something with the selection
-
-                            }
-                        })
-                        .setCancelable(true)
-                        .show();
+                if (expNames != null) {
 
 
+                    new AlertDialog.Builder(EditExpense.this)
+                            .setTitle("Expenses")
+                            .setItems(expNames, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int item) {
+                                    // Do something with the selection
 
+                                }
+                            })
+                            .setCancelable(true)
+                            .show();
+
+
+                }
             }
         });
 
