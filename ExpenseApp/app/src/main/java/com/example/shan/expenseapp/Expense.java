@@ -16,11 +16,11 @@ public class Expense implements Parcelable{
 
     public String name;
     public String category;
-    public Date date;
+    public String date;
     public double amount;
     public Uri uri;
 
-    public Expense(String n, String c, double a, Date d, Uri u)
+    public Expense(String n, String c, double a, String d, Uri u)
     {
         this.name = n;
         this.category = c;
@@ -56,7 +56,7 @@ public class Expense implements Parcelable{
         dest.writeString(name);
         dest.writeString(category);
         dest.writeDouble(amount);
-        dest.writeString(String.valueOf(date));
+        dest.writeString(date);
         dest.writeString(String.valueOf(uri));
 
 

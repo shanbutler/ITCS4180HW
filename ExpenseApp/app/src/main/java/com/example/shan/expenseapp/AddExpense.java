@@ -2,6 +2,7 @@ package com.example.shan.expenseapp;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,16 +20,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
 public class AddExpense extends AppCompatActivity {
 
     EditText expName;
-    Spinner spinner;
+    EditText expAmount;
+    Spinner spinner; // category
     Button addExpButton;
-    //ImageButton calendarButton;
-    DatePicker datePicker;
+    ImageButton receiptButton;
+    //DatePicker datePicker;
     TextView dateView;
     Calendar calendar;
     int year;
@@ -37,9 +40,11 @@ public class AddExpense extends AppCompatActivity {
 
     public String name;
     public String category;
-    public Date date;
+    public String date;
     public double amount;
     public Uri uri;
+
+    private int PICK_IMAGE_REQUEST = 1;
 
 
 
@@ -49,8 +54,12 @@ public class AddExpense extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
 
+        expName = (EditText) findViewById(R.id.expNameText);
+        expAmount = (EditText) findViewById(R.id.expAmountText);
+        dateView = (EditText) findViewById(R.id.dateView);
+
         addExpButton = (Button) findViewById(R.id.addNewExp);
-        //calendarButton = (ImageButton) findViewById(R.id.calendarButton);
+        receiptButton = (ImageButton) findViewById(R.id.receiptButton);
 
         // fill the dropdown menu
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -59,8 +68,8 @@ public class AddExpense extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+
         // use date picker dialog
-        dateView = (EditText) findViewById(R.id.dateView);
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
 
@@ -71,10 +80,29 @@ public class AddExpense extends AppCompatActivity {
         addExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                name = expName.getText().toString();
+                category = spinner.getSelectedItem().toString();
+                amount = Double.parseDouble(expAmount.getText().toString());
+                date = dateView.getText().toString();
+                // no idea how to do uri
+                uri = Uri.parse("file://drawable/receipt1.gif");
+
+
                 Intent returnMain = new Intent(AddExpense.this, MainActivity.class);
                 Expense e = new Expense(name, category, amount, date, uri);
                 startActivity(returnMain);
                 returnMain.putExtra("NEW_EXPENSE", e);
+
+            }
+        });
+
+        receiptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
 
             }
         });

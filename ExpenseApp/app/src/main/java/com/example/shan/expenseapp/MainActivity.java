@@ -1,11 +1,14 @@
 package com.example.shan.expenseapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // doesn't work
+        addPicToGallery(MainActivity.this, "@drawable/receipt1");
+
         addExpButton = (Button) findViewById(R.id.addExpenseButton);
         editExpButton = (Button) findViewById(R.id.editExpenseButton);
         deleteExpButton = (Button) findViewById(R.id.deleteExpenseButton);
@@ -41,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         final Intent editIntent = new Intent(MainActivity.this, EditExpense.class);
         final Intent deleteIntent = new Intent(MainActivity.this, DeleteExpense.class);
         final Intent showIntent = new Intent(MainActivity.this, ShowExpenses.class);
-        //final Intent retrieve = getIntent(AddExpense.class, MainActivity.this);
+
 
         // go to Home screen
         final Intent finish = new Intent(Intent.ACTION_MAIN);
@@ -88,5 +94,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public static void addPicToGallery(Context context, String photoPath) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(photoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        context.sendBroadcast(mediaScanIntent);
     }
 }
