@@ -28,16 +28,16 @@ public class MainActivity extends AppCompatActivity {
     Button showExpButton;
     Button finishButton;
     //Intent in;
-    ArrayList<Expense> expObjList = new ArrayList<Expense>();
-    int numExpenses = 0;
+    static ArrayList<Expense> expObjList = new ArrayList<Expense>();
     Expense exp;
+    Expense saveExp;
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //expObjList.add(new Expense("Shan", "Groceries", 0.0, "6/27/1987"));
         // doesn't work
         addPicToGallery(MainActivity.this, "@drawable/receipt1");
 
@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         final Intent editIntent = new Intent(MainActivity.this, EditExpense.class);
         final Intent deleteIntent = new Intent(MainActivity.this, DeleteExpense.class);
         final Intent showIntent = new Intent(MainActivity.this, ShowExpenses.class);
-        //final Intent fromAdd = getIntent();
-
 
         // go to Home screen
         final Intent finish = new Intent(Intent.ACTION_MAIN);
@@ -60,14 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
         // retrieve expenses
         if(getIntent().getExtras() != null){
-            //in.getParcelableExtra("NEW_EXPENSE");
-            //Bundle b = new Bundle();
-            //b = getIntent().getExtras();
-            //exp = b.get("NEW_EXPENSE");
             exp = getIntent().getExtras().getParcelable("NEW_EXPENSE");
-            //exp = getIntent().getParcelableExtra("NEW_EXPENSE");
             expObjList.add(exp);
-            numExpenses++;
+            // overwrite old expense with changes:
+            // this breaks everything
+               // saveExp = getIntent().getExtras().getParcelable("SAVE_EXPENSE");
+               // position = getIntent().getIntExtra("POS_IN_ARRAY", 0);
+               // expObjList.set(position, saveExp);
+
             Log.d("demo", "received expense");
         }
 

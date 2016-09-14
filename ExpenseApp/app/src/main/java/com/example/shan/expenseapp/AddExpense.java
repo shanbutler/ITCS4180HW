@@ -85,12 +85,13 @@ public class AddExpense extends AppCompatActivity {
 
                     name = expName.getText().toString();
                     category = spinner.getSelectedItem().toString();
-                if(expAmount.getText().toString() != ""){
-                    amount = Double.parseDouble(expAmount.getText().toString());
-                }
-                else{
-                    amount = 0.0;
-                }
+                    try{
+                        amount = Double.parseDouble(expAmount.getText().toString());
+                    }
+                    catch(NumberFormatException e) {
+                        amount = 0.0;
+                        Toast.makeText(AddExpense.this, "Invalid field", Toast.LENGTH_SHORT).show();
+                    }
 
                     date = dateView.getText().toString();
                     // no idea how to do uri
@@ -100,19 +101,8 @@ public class AddExpense extends AppCompatActivity {
                 Intent returnMain = new Intent(AddExpense.this, MainActivity.class);
                 // add in uri
                 Expense e = new Expense(name, category, amount, date);
-                    /*//Bundle b = new Bundle();
-                    //b.putParcelable("NEW_EXPENSE", e);
-                    ArrayList<Expense> expArray = new ArrayList<Expense>();
-                    expArray.add(e);
-                    startActivity(returnMain);
-                    //returnMain.putExtras(b);
-                    //returnMain.putParcelableExtra(e);
-                    returnMain.putExtras(expArray);*/
-
                 returnMain.putExtra("NEW_EXPENSE", e);
                 startActivity(returnMain);
-
-
                     Log.d("demo", e.toString());
                 }
 
@@ -126,6 +116,7 @@ public class AddExpense extends AppCompatActivity {
         receiptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // brings up image chooser
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
