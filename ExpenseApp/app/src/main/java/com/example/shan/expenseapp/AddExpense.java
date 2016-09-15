@@ -39,6 +39,7 @@ public class AddExpense extends AppCompatActivity {
     int year;
     int month;
     int day;
+    ArrayList<Expense> expenseArrayList;
 
     public String name;
     public String category;
@@ -68,7 +69,6 @@ public class AddExpense extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-
         // use date picker dialog
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -76,6 +76,12 @@ public class AddExpense extends AppCompatActivity {
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         showDate(year, month+1, day);
+
+        if (getIntent().getParcelableArrayListExtra("EXPENSE_LIST") != null) {
+            expenseArrayList = getIntent().getParcelableArrayListExtra("EXPENSE_LIST");
+        } else {
+            expenseArrayList = new ArrayList<>();
+        }
 
         addExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,13 +102,13 @@ public class AddExpense extends AppCompatActivity {
                 // no idea how to do uri
                 uri = Uri.parse("file://drawable/receipt1.gif");
 
-                if(name != null){
+                if(name != null && !category.equals("Select Category") && amount != 0.0){
                     Intent returnMain = new Intent(AddExpense.this, MainActivity.class);
                     // add in uri
                     Expense e = new Expense(name, category, amount, date);
-                    returnMain.putExtra("NEW_EXPENSE", e);
+                    expenseArrayList.add(e);
+                    returnMain.putExtra("EXPENSE_LIST", expenseArrayList);
                     startActivity(returnMain);
-                        Log.d("demo", e.toString());
                 } else {
                     Toast.makeText(AddExpense.this, "Invalid field", Toast.LENGTH_SHORT).show();
                 }

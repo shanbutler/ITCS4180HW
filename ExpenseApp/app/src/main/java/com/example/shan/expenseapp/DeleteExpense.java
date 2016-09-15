@@ -46,8 +46,8 @@ public class DeleteExpense extends AppCompatActivity {
         setContentView(R.layout.activity_delete_expense);
 
         deleteButton = (Button) findViewById(R.id.deleteButtonD);
-        cancelButton = (Button) findViewById(R.id.cancelButton);
-        selectExpense = (Button) findViewById(R.id.selectExpButton);
+        cancelButton = (Button) findViewById(R.id.cancelButtonD);
+        selectExpense = (Button) findViewById(R.id.selectExpButtonD);
         main = new Intent(DeleteExpense.this, MainActivity.class);
 
         expNameE = (EditText) findViewById(R.id.expNameText);
@@ -57,10 +57,10 @@ public class DeleteExpense extends AppCompatActivity {
 
         // fill the dropdown menu
         spinnerE = (Spinner) findViewById(R.id.spinner);
-        final ArrayAdapter<CharSequence> adapterE = ArrayAdapter.createFromResource(this,
+        final ArrayAdapter<CharSequence> adapterD = ArrayAdapter.createFromResource(this,
                 R.array.expense_categories, android.R.layout.simple_spinner_item);
-        adapterE.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerE.setAdapter(adapterE);
+        adapterD.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerE.setAdapter(adapterD);
 
         // retrieve expenses
         if(getIntent().getExtras() != null){
@@ -77,15 +77,15 @@ public class DeleteExpense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (expNames != null) {
 
+                if (expNames != null) {
                     new AlertDialog.Builder(DeleteExpense.this)
                             .setTitle("Expenses")
                             .setItems(expNames, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int item) {
                                     // fill out information
                                     // find position of category name for spinner selection
-                                    spinnerE.setSelection(adapterE.getPosition(expenses.get(item).category));
+                                    spinnerE.setSelection(adapterD.getPosition(expenses.get(item).category));
                                     expNameE.setText(expenses.get(item).name);
                                     expAmountE.setText(String.valueOf(expenses.get(item).amount));
                                     dateViewE.setText(expenses.get(item).date);

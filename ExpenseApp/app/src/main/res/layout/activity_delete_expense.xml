@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:padding="10dp"
-        android:id="@+id/selectExpButton"
+        android:id="@+id/selectExpButtonD"
         android:text="@string/selExpenseText" />
 
     <TextView
@@ -45,6 +45,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         />
 
     <TextView
@@ -120,7 +124,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cancelButton"
+            android:id="@+id/cancelButtonD"
             android:text="@string/cancelText" />
 
     </LinearLayout>

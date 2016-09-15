@@ -3,6 +3,7 @@ package com.example.shan.expenseapp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -33,7 +34,7 @@ public class EditExpense extends AppCompatActivity {
     //String[] stringExp = new String[];
     Bundle b = new Bundle();
     String[] expNames;
-    int position; // pos of expense in object array
+    int position = -1; // pos of expense in object array
 
     Intent main;
     @Override
@@ -60,14 +61,14 @@ public class EditExpense extends AppCompatActivity {
 
         // retrieve expenses
         if(getIntent().getExtras() != null){
-            expenses = getIntent().getParcelableArrayListExtra("EXPENSES_LIST");
+            expenses = getIntent().getParcelableArrayListExtra("EXPENSE_LIST");
 
             expNames = new String[expenses.size()];
             for(int i = 0; i < expenses.size(); i++){
                 expNames[i] = (String) expenses.get(i).name;
             }
-
         }
+
         selectExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,47 +76,56 @@ public class EditExpense extends AppCompatActivity {
                 if (expNames != null) {
 
                     new AlertDialog.Builder(EditExpense.this)
-                            .setTitle("Expenses")
-                            .setItems(expNames, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int item) {
-                                    // fill out information
-                                    // find position of category name for spinner selection
-                                    spinnerE.setSelection(adapterE.getPosition(expenses.get(item).category));
-                                    expNameE.setText(expenses.get(item).name);
-                                    expAmountE.setText(String.valueOf(expenses.get(item).amount));
-                                    dateViewE.setText(expenses.get(item).date);
-                                    position = item;
-
-                                }
-                            })
-                            .setCancelable(true)
-                            .show();
+                        .setTitle("Expenses")
+                        .setItems(expNames, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                // fill out information
+                                // find position of category name for spinner selection
+                                spinnerE.setSelection(adapterE.getPosition(expenses.get(item).category));
+                                expNameE.setText(expenses.get(item).name);
+                                expAmountE.setText(String.valueOf(expenses.get(item).amount));
+                                dateViewE.setText(expenses.get(item).date);
+                                position = item;
+                            }
+                        })
+                        .setCancelable(true)
+                        .show();
                 }
             }
         });
 
-
-
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double d;
+                double amount;
+
+                String name = expNameE.getText().toString();
+                String category = spinnerE.getSelectedItem().toString();
+
                 try{
-                    d = Double.parseDouble(expAmountE.getText().toString());
+                    amount = Double.parseDouble(expAmountE.getText().toString());
                 }
                 catch(NumberFormatException e) {
-                    d = 0.0;
-                    Toast.makeText(EditExpense.this, "Invalid field", Toast.LENGTH_SHORT).show();
+                    amount = 0.0;
                 }
 
-                Intent rMain = new Intent(EditExpense.this, MainActivity.class);
-                // add in uri
-                Expense e = new Expense(expNameE.getText().toString(), spinnerE.getSelectedItem().toString(), d, dateViewE.getText().toString());
-                rMain.putExtra("SAVE_EXPENSE", e);
-                //rMain.putExtra("POS_IN_ARRAY", position);
-                Log.d("demo", e.toString());
-                startActivity(main);
+                String date = dateViewE.getText().toString();
+                // no idea how to do uri
+                //uri = Uri.parse("file://drawable/receipt1.gif");
+
+
+                if (position == -1) {
+                    Toast.makeText(EditExpense.this, "Invalid selection", Toast.LENGTH_SHORT).show();
+                } else if (!name.equals("") && !category.equals("Select Category") && amount != 0.0){
+                    Intent returnMain = new Intent(EditExpense.this, MainActivity.class);
+                    // add in uri
+                    Expense e = new Expense(name, category, amount, date);
+                    expenses.set(position, e);
+                    returnMain.putExtra("EXPENSE_LIST", expenses);
+                    startActivity(returnMain);
+                } else {
+                    Toast.makeText(EditExpense.this, "Invalid field", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {

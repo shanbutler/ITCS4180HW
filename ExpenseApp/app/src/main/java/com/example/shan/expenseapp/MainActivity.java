@@ -28,10 +28,16 @@ public class MainActivity extends AppCompatActivity {
     Button showExpButton;
     Button finishButton;
     //Intent in;
-    ArrayList<Expense> expObjList = new ArrayList<Expense>();
+    ArrayList<Expense> expObjList;
     Expense exp;
     Expense saveExp;
     int position;
+
+    Intent addIntent;
+    Intent editIntent;
+    Intent deleteIntent;
+    Intent showIntent;
+    Intent finish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +52,24 @@ public class MainActivity extends AppCompatActivity {
         deleteExpButton = (Button) findViewById(R.id.deleteExpenseButton);
         showExpButton = (Button) findViewById(R.id.showExpenseButton);
         finishButton = (Button) findViewById(R.id.finishButton);
-        final Intent addIntent = new Intent(MainActivity.this, AddExpense.class);
-        final Intent editIntent = new Intent(MainActivity.this, EditExpense.class);
-        final Intent deleteIntent = new Intent(MainActivity.this, DeleteExpense.class);
-        final Intent showIntent = new Intent(MainActivity.this, ShowExpenses.class);
+        addIntent = new Intent(MainActivity.this, AddExpense.class);
+        editIntent = new Intent(MainActivity.this, EditExpense.class);
+        deleteIntent = new Intent(MainActivity.this, DeleteExpense.class);
+        showIntent = new Intent(MainActivity.this, ShowExpenses.class);
 
         // go to Home screen
-        final Intent finish = new Intent(Intent.ACTION_MAIN);
+        finish = new Intent(Intent.ACTION_MAIN);
         finish.addCategory(Intent.CATEGORY_HOME);
         finish.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // retrieve expenses
         if(getIntent().getExtras() != null){
-            if (getIntent().getExtras().getParcelable("NEW_EXPENSE") != null) {
-                Log.d("debug", getIntent().getType());
-                exp = getIntent().getExtras().getParcelable("NEW_EXPENSE");
-                expObjList.add(exp);
+            if (getIntent().getExtras().getParcelableArrayList("EXPENSE_LIST") != null) {
+                expObjList = getIntent().getExtras().getParcelableArrayList("EXPENSE_LIST");
+
+                for (Expense e : expObjList) {
+                    Log.d("debug", "expense=" + e.toString());
+                }
             }
 
             // overwrite old expense with changes:
@@ -69,13 +77,12 @@ public class MainActivity extends AppCompatActivity {
                // saveExp = getIntent().getExtras().getParcelable("SAVE_EXPENSE");
                // position = getIntent().getIntExtra("POS_IN_ARRAY", 0);
                // expObjList.set(position, saveExp);
-
-            Log.d("demo", "received expense");
         }
 
         addExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addIntent.putExtra("EXPENSE_LIST", expObjList);
                 startActivity(addIntent);
             }
         });
@@ -83,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(expObjList.size() > 0){
-                    editIntent.putExtra("EXPENSES_LIST", expObjList);
+                    editIntent.putExtra("EXPENSE_LIST", expObjList);
                     startActivity(editIntent);
                 }
                 else{
@@ -98,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(expObjList.size() > 0){
-                    showIntent.putExtra("EXPENSES_LIST", expObjList);
+                    deleteIntent.putExtra("EXPENSE_LIST", expObjList);
                     startActivity(deleteIntent);
                 }
                 else{
@@ -111,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(expObjList.size() > 0){
-                    showIntent.putExtra("EXPENSES_LIST", expObjList);
+                    showIntent.putExtra("EXPENSE_LIST", expObjList);
                     startActivity(showIntent);
                 }
                 else{
