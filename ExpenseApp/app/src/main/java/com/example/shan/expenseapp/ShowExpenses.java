@@ -41,7 +41,6 @@ public class ShowExpenses extends AppCompatActivity {
         showAmount = (TextView) findViewById(R.id.showAmountView);
         showDate = (TextView) findViewById(R.id.showDateView);
 
-
         firstButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

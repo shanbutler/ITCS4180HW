@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Button showExpButton;
     Button finishButton;
     //Intent in;
-    static ArrayList<Expense> expObjList = new ArrayList<Expense>();
+    ArrayList<Expense> expObjList = new ArrayList<Expense>();
     Expense exp;
     Expense saveExp;
     int position;
@@ -58,8 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
         // retrieve expenses
         if(getIntent().getExtras() != null){
-            exp = getIntent().getExtras().getParcelable("NEW_EXPENSE");
-            expObjList.add(exp);
+            if (getIntent().getExtras().getParcelable("NEW_EXPENSE") != null) {
+                Log.d("debug", getIntent().getType());
+                exp = getIntent().getExtras().getParcelable("NEW_EXPENSE");
+                expObjList.add(exp);
+            }
+
             // overwrite old expense with changes:
             // this breaks everything
                // saveExp = getIntent().getExtras().getParcelable("SAVE_EXPENSE");
@@ -68,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d("demo", "received expense");
         }
-
 
         addExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         editExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(expObjList != null){
+                if(expObjList.size() > 0){
                     editIntent.putExtra("EXPENSES_LIST", expObjList);
                     startActivity(editIntent);
                 }
@@ -90,16 +93,31 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         deleteExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(deleteIntent);
+                if(expObjList.size() > 0){
+                    showIntent.putExtra("EXPENSES_LIST", expObjList);
+                    startActivity(deleteIntent);
+                }
+                else{
+                    // error, no expense
+                    Toast.makeText(MainActivity.this, "No expenses", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         showExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(showIntent);
+                if(expObjList.size() > 0){
+                    showIntent.putExtra("EXPENSES_LIST", expObjList);
+                    startActivity(showIntent);
+                }
+                else{
+                    // error, no expense
+                    Toast.makeText(MainActivity.this, "No expenses", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         finishButton.setOnClickListener(new View.OnClickListener() {
@@ -108,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(finish);
             }
         });
-
-
     }
 // this don't work
     public static void addPicToGallery(Context context, String photoPath) {

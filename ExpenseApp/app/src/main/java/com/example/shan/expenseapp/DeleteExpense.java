@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Akhil Ramlakan
  */
 
-public class DeleteExpense extends EditExpense {
+public class DeleteExpense extends AppCompatActivity {
     Button deleteButton;
     Button cancelButton;
     Button selectExpense;
@@ -43,9 +43,9 @@ public class DeleteExpense extends EditExpense {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_expense);
+        setContentView(R.layout.activity_delete_expense);
 
-        deleteButton = (Button) findViewById(R.id.deleteButton);
+        deleteButton = (Button) findViewById(R.id.deleteButtonD);
         cancelButton = (Button) findViewById(R.id.cancelButton);
         selectExpense = (Button) findViewById(R.id.selectExpButton);
         main = new Intent(DeleteExpense.this, MainActivity.class);
@@ -72,12 +72,12 @@ public class DeleteExpense extends EditExpense {
             }
 
         }
+
         selectExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (expNames != null) {
-
 
                     new AlertDialog.Builder(DeleteExpense.this)
                             .setTitle("Expenses")

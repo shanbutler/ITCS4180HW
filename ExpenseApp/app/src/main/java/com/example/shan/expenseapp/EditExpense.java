@@ -74,7 +74,6 @@ public class EditExpense extends AppCompatActivity {
 
                 if (expNames != null) {
 
-
                     new AlertDialog.Builder(EditExpense.this)
                             .setTitle("Expenses")
                             .setItems(expNames, new DialogInterface.OnClickListener() {

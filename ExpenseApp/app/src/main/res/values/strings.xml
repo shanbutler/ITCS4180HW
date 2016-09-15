@@ -19,6 +19,10 @@
     <string name="selExpenseText">Select Expense</string>
     <string name="saveText">Save</string>
     <string name="cancelText">Cancel</string>
+    <string name="receiptT">Receipt</string>
+    <string name="name">Name</string>
+    <string name="expenseDetails">Expense Details</string>
+    <string name="deleteText">Delete</string>
 
     // spinner array; drop down for categories of expenses
     <string-array name="expense_categories">

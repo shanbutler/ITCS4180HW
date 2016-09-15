@@ -12,7 +12,7 @@ import java.util.Date;
  * Shannon Butler
  * Akhil Ramlakan
  */
-public class Expense implements Parcelable{
+public class Expense implements Parcelable {
 
     public String name;
     public String category;
@@ -35,9 +35,9 @@ public class Expense implements Parcelable{
         String str = name + " " + category;
         return str;
     }
+
     public Expense(Parcel in){
         readFromParcel(in);
-
     }
 
     public static Parcelable.Creator CREATOR = new Parcelable.Creator(){
@@ -50,7 +50,6 @@ public class Expense implements Parcelable{
 
     };
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -58,23 +57,20 @@ public class Expense implements Parcelable{
 
     public void readFromParcel(Parcel in)
     {
-        name = in.readString();
-        category = in.readString();
-        amount = in.readDouble();
-        date = in.readString();
+        this.name = in.readString();
+        this.category = in.readString();
+        this.amount = in.readDouble();
+        this.date = in.readString();
         //String u = uri.toString();
         //u = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
         dest.writeString(name);
         dest.writeString(category);
         dest.writeDouble(amount);
         dest.writeString(date);
         //dest.writeString(String.valueOf(uri));
-
-
     }
 }

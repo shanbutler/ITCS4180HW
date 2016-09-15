@@ -49,8 +49,6 @@ public class AddExpense extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,30 +81,29 @@ public class AddExpense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                    name = expName.getText().toString();
-                    category = spinner.getSelectedItem().toString();
-                    try{
-                        amount = Double.parseDouble(expAmount.getText().toString());
-                    }
-                    catch(NumberFormatException e) {
-                        amount = 0.0;
-                        Toast.makeText(AddExpense.this, "Invalid field", Toast.LENGTH_SHORT).show();
-                    }
+                name = expName.getText().toString();
+                category = spinner.getSelectedItem().toString();
 
-                    date = dateView.getText().toString();
-                    // no idea how to do uri
-                    uri = Uri.parse("file://drawable/receipt1.gif");
-
-            if(name != null){
-                Intent returnMain = new Intent(AddExpense.this, MainActivity.class);
-                // add in uri
-                Expense e = new Expense(name, category, amount, date);
-                returnMain.putExtra("NEW_EXPENSE", e);
-                startActivity(returnMain);
-                    Log.d("demo", e.toString());
+                try{
+                    amount = Double.parseDouble(expAmount.getText().toString());
+                }
+                catch(NumberFormatException e) {
+                    amount = 0.0;
+                    Toast.makeText(AddExpense.this, "Invalid field", Toast.LENGTH_SHORT).show();
                 }
 
-                else{
+                date = dateView.getText().toString();
+                // no idea how to do uri
+                uri = Uri.parse("file://drawable/receipt1.gif");
+
+                if(name != null){
+                    Intent returnMain = new Intent(AddExpense.this, MainActivity.class);
+                    // add in uri
+                    Expense e = new Expense(name, category, amount, date);
+                    returnMain.putExtra("NEW_EXPENSE", e);
+                    startActivity(returnMain);
+                        Log.d("demo", e.toString());
+                } else {
                     Toast.makeText(AddExpense.this, "Invalid field", Toast.LENGTH_SHORT).show();
                 }
 
