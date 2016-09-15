@@ -123,6 +123,7 @@ public class EditExpense extends AppCompatActivity {
                     expenses.set(position, e);
                     returnMain.putExtra("EXPENSE_LIST", expenses);
                     startActivity(returnMain);
+                    Toast.makeText(EditExpense.this, "Edit Successful", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(EditExpense.this, "Invalid field", Toast.LENGTH_SHORT).show();
                 }

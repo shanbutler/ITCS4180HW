@@ -109,6 +109,7 @@ public class AddExpense extends AppCompatActivity {
                     expenseArrayList.add(e);
                     returnMain.putExtra("EXPENSE_LIST", expenseArrayList);
                     startActivity(returnMain);
+                    Toast.makeText(AddExpense.this, "Added Expense " + e.name, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(AddExpense.this, "Invalid field", Toast.LENGTH_SHORT).show();
                 }

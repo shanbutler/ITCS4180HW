@@ -37,7 +37,7 @@ public class DeleteExpense extends AppCompatActivity {
     //String[] stringExp = new String[];
     Bundle b = new Bundle();
     String[] expNames;
-    int position; // pos of expense in object array
+    int position = -1; // pos of expense in object array
 
     Intent main;
     @Override
@@ -64,7 +64,7 @@ public class DeleteExpense extends AppCompatActivity {
 
         // retrieve expenses
         if(getIntent().getExtras() != null){
-            expenses = getIntent().getParcelableArrayListExtra("EXPENSES_LIST");
+            expenses = getIntent().getParcelableArrayListExtra("EXPENSE_LIST");
 
             expNames = new String[expenses.size()];
             for(int i = 0; i < expenses.size(); i++){
@@ -103,8 +103,16 @@ public class DeleteExpense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent retMain = new Intent(DeleteExpense.this, MainActivity.class);
-                startActivity(retMain);
+                if (position != -1) {
+                    Intent retMain = new Intent(DeleteExpense.this, MainActivity.class);
+                    expenses.remove(position);
+                    retMain.putExtra("EXPENSE_LIST", expenses);
+                    startActivity(retMain);
+                    Toast.makeText(DeleteExpense.this, "Deletion Successful", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DeleteExpense.this, "Invalid selection", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {

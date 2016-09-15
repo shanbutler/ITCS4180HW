@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Button showExpButton;
     Button finishButton;
     //Intent in;
-    ArrayList<Expense> expObjList;
+    ArrayList<Expense> expObjList = new ArrayList<>();
     Expense exp;
     Expense saveExp;
     int position;
@@ -66,10 +66,6 @@ public class MainActivity extends AppCompatActivity {
         if(getIntent().getExtras() != null){
             if (getIntent().getExtras().getParcelableArrayList("EXPENSE_LIST") != null) {
                 expObjList = getIntent().getExtras().getParcelableArrayList("EXPENSE_LIST");
-
-                for (Expense e : expObjList) {
-                    Log.d("debug", "expense=" + e.toString());
-                }
             }
 
             // overwrite old expense with changes:
