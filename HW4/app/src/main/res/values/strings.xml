@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HW4</string>
+    <string name="triviaAppTitleText">Welcome to &#10;Trivia App</string>
+    <string name="exitTextStr">Exit</string>
+    <string name="startTriviaTxt">Start Trivia</string>
+    <string name="loadingTriviaTxt">Loading Trivia</string>
+</resources>
