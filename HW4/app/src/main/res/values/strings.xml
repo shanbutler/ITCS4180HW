@@ -4,4 +4,9 @@
     <string name="exitTextStr">Exit</string>
     <string name="startTriviaTxt">Start Trivia</string>
     <string name="loadingTriviaTxt">Loading Trivia</string>
+    <string name="q1Txt">Q1</string>
+    <string name="countdownTxt">You have 120 seconds remaining</string>
+    <string name="countdownTxt1">Time Left: 120 seconds</string>
+    <string name="quitTxt">Quit</string>
+    <string name="nextTxt">Next</string>
 </resources>

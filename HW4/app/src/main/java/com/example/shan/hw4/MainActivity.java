@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AsyncJSONGet.IData {
 
+    ArrayList<Question> questionsList = new ArrayList<Question>();
+    final static String QUESTIONS_KEY = "questionsList";
     Button exitButton;
     Button startTriviaButton;
     ImageView triviaImage;
@@ -49,9 +51,10 @@ public class MainActivity extends AppCompatActivity implements AsyncJSONGet.IDat
         startTriviaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // pass the array list of question objects
                 Intent triviaIntent = new Intent(MainActivity.this, TriviaActivity.class);
+                triviaIntent.putExtra(QUESTIONS_KEY, questionsList);
                 startActivity(triviaIntent);
-
             }
         });
 
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements AsyncJSONGet.IDat
         triviaReady.setVisibility(View.VISIBLE); // turn on trivia ready text
         triviaReady.setText("Trivia Ready"); // say that trivia is ready
         startTriviaButton.setEnabled(true); // turn on start trivia button
-
+        questionsList = result; // used stored questions for bundling later
     }
 
 }
