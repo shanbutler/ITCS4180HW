@@ -1,5 +1,7 @@
 package com.example.shan.hw4;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -14,9 +16,17 @@ import java.util.ArrayList;
  */
 public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
     ImageView imageView;
+    Context context;
+    private ProgressDialog dialog;
 
-    public DownloadImage(ImageView image) {
+    public DownloadImage(ImageView image, Context context) {
         this.imageView = image;
+        this.context = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        dialog = ProgressDialog.show(context, "", "Loading image", true, false);
     }
 
     @Override
@@ -37,6 +47,7 @@ public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
+        dialog.dismiss();
         imageView.setImageBitmap(bitmap);
     }
 }

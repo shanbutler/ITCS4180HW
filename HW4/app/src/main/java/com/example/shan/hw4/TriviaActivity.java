@@ -1,10 +1,14 @@
 package com.example.shan.hw4;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -15,10 +19,14 @@ import java.util.ArrayList;
 public class TriviaActivity extends AppCompatActivity {
 
     ArrayList<Question> questionsList;
-    int numCorrect;
     TextView countdownTextView;
     RadioGroup radioGroup;
     ImageView imageView;
+    Button nextbutton;
+    ProgressDialog dialog;
+
+    int numCorrect;
+    int questionIndex = 0;
 
     final static String QUESTIONS_KEY = "questionsList";
     final static String NUMBER_CORRECT = "numberCorrect";
@@ -31,9 +39,10 @@ public class TriviaActivity extends AppCompatActivity {
         countdownTextView = (TextView) findViewById(R.id.countdownTextView);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         imageView = (ImageView) findViewById(R.id.questionImageView);
+        nextbutton = (Button) findViewById(R.id.nextButton);
+
         int numCorrect = 0;
         Bundle extras = getIntent().getExtras();
-
 
         if(getIntent().getExtras() != null) {
             if(extras.containsKey(MainActivity.QUESTIONS_KEY)){
@@ -59,23 +68,34 @@ public class TriviaActivity extends AppCompatActivity {
             }
         };
 
-        displayQuestion(questionsList.get(0));
+        displayQuestion(questionsList.get(questionIndex));
 
         timer.start();
 
-        /*
-        // update questions list radio group depending on amount of choices
-        for(int i = 0; i < questionsList.get(???).getChoices().size(); i++) {
-            RadioButton radioButton = new RadioButton(this);
-            radioButton.setText(questionsList.get(???).getChoices().get(i));
-            radioButton.setId(i);
-            radioGroup.addView(radioButton);
-        }*/
+        nextbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayQuestion(questionsList.get(++questionIndex));
+            }
+        });
     }
 
     public void displayQuestion (Question question) {
         if (question.getImageURL() != null) {
-            new DownloadImage(imageView).execute(question.getImageURL());
+            new DownloadImage(imageView, this).execute(question.getImageURL());
+        } else {
+            imageView.setImageBitmap(null);
         }
+
+        /*for (int i = 0; i < question.getChoices().size(); i++) {
+            RadioButton r = new RadioButton(this);
+            String choice = question.getChoices().get(i);
+
+            radioGroup.addView(r, i);
+        }*/
+    }
+
+    public void dismissDialog() {
+        dialog.dismiss();
     }
 }
