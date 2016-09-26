@@ -4,11 +4,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +30,7 @@ public class AsyncJSONGet extends AsyncTask<String, Void, ArrayList<Question>> {
 
     // allows access to mainactivity methods
     IData activity;
+
     public AsyncJSONGet(IData activity){
         this.activity = activity;
     }
@@ -39,13 +45,14 @@ public class AsyncJSONGet extends AsyncTask<String, Void, ArrayList<Question>> {
         String urlString = params[0];
 
         try {
+            ArrayList<Question> questions = new ArrayList<>();
             URL url = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.connect();
             int statusCode = con.getResponseCode();
-            if (statusCode == HttpURLConnection.HTTP_OK) {
 
+            if (statusCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 StringBuilder sb = new StringBuilder();
                 String line = reader.readLine();
@@ -54,21 +61,37 @@ public class AsyncJSONGet extends AsyncTask<String, Void, ArrayList<Question>> {
                     line = reader.readLine();
                 }
 
-                Log.d("demo", sb.toString());
-                ArrayList<Question> questions = QuestionUtil.QuestionsJSONParser.parseQuestions(sb.toString());
+                JSONObject questionsJSON = new JSONObject(sb.toString());
+                JSONArray questionsJSONArray = questionsJSON.getJSONArray("questions");
+
+                for (int i = 0; i < questionsJSONArray.length(); i++) {
+                    JSONObject questionJSON = questionsJSONArray.getJSONObject(i);
+
+                    int id = questionJSON.getInt("id");
+                    String text = questionJSON.getString("text");
+                    String imageUrl = questionJSON.getString("image");
+                    int answer = questionJSON.getInt("answer");
+
+                    JSONObject choicesJSON = questionJSON.getJSONObject("choices");
+                    JSONArray choiceArray = choicesJSON.getJSONArray("choice");
+                    ArrayList<String> choices = new ArrayList<>();
+
+                    for (int j = 0; j < choiceArray.length(); j++) {
+                        choices.add(choiceArray.getString(j));
+                    }
+                    questions.add(new Question(id, text, imageUrl, answer, choices);
+                }
+
                 return questions;
             }
         } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-        } // catch (JSONException e) {
-        catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

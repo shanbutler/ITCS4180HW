@@ -27,7 +27,6 @@ public class QuestionUtil {
                  for(int i = 0 ; i < questionsJSONArray.length(); i++){
                      JSONObject questionJSONObject = questionsJSONArray.getJSONObject(i);
 
-
                      // get choices object and array from within question object
                      JSONObject choicesObj = questionJSONObject.getJSONObject("choices");
                      JSONArray choicesArray = choicesObj.getJSONArray("choice");
