@@ -19,13 +19,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AsyncJSONGet.IData {
 
-    ArrayList<Question> questionsList = new ArrayList<Question>();
+    ArrayList<Question> questionsList;
     final static String QUESTIONS_KEY = "questionsList";
     Button exitButton;
     Button startTriviaButton;
     ImageView triviaImage;
     TextView triviaReady;
-
     ProgressDialog dialog;
     String strUrl = "http://dev.theappsdr.com/apis/trivia_json/index.php";
 
@@ -62,12 +61,10 @@ public class MainActivity extends AppCompatActivity implements AsyncJSONGet.IDat
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
             }
         });
 

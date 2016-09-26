@@ -36,7 +36,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/imageView"
+        android:id="@+id/questionImageView"
         android:layout_below="@+id/questionNumTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="250dp"

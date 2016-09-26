@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -13,10 +14,11 @@ import java.util.ArrayList;
 
 public class TriviaActivity extends AppCompatActivity {
 
-    ArrayList<Question> questionsList = new ArrayList<>();
+    ArrayList<Question> questionsList;
     int numCorrect;
     TextView countdownTextView;
     RadioGroup radioGroup;
+    ImageView imageView;
 
     final static String QUESTIONS_KEY = "questionsList";
     final static String NUMBER_CORRECT = "numberCorrect";
@@ -28,13 +30,14 @@ public class TriviaActivity extends AppCompatActivity {
 
         countdownTextView = (TextView) findViewById(R.id.countdownTextView);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        imageView = (ImageView) findViewById(R.id.questionImageView);
+        int numCorrect = 0;
         Bundle extras = getIntent().getExtras();
 
 
         if(getIntent().getExtras() != null) {
             if(extras.containsKey(MainActivity.QUESTIONS_KEY)){
                 questionsList = (ArrayList<Question>) extras.getSerializable(MainActivity.QUESTIONS_KEY);
-
             } else{
                 Log.d("demo", "nothing passed");
             }
@@ -42,20 +45,22 @@ public class TriviaActivity extends AppCompatActivity {
 
         // create a timer
         final CountDownTimer timer = new CountDownTimer(241000, 1000) {
-
             public void onTick(long millisUntilFinished) {
                 countdownTextView.setText("Time Left: " + String.valueOf(millisUntilFinished / 1000) + " seconds");
             }
 
             public void onFinish() {
-                countdownTextView.setText("Time Has Expired!");
+                /*countdownTextView.setText("Time Has Expired!");
                 Intent triviaIntent = new Intent(TriviaActivity.this, Stats.class);
                 triviaIntent.putExtra(QUESTIONS_KEY, questionsList);
                 triviaIntent.putExtra(NUMBER_CORRECT, numCorrect);
-                startActivity(triviaIntent);
+                startActivity(triviaIntent);*/
                 finish();
             }
         };
+
+        displayQuestion(questionsList.get(0));
+
         timer.start();
 
         /*
@@ -66,5 +71,11 @@ public class TriviaActivity extends AppCompatActivity {
             radioButton.setId(i);
             radioGroup.addView(radioButton);
         }*/
+    }
+
+    public void displayQuestion (Question question) {
+        if (question.getImageURL() != null) {
+            new DownloadImage(imageView).execute(question.getImageURL());
+        }
     }
 }

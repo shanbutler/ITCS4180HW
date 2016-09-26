@@ -20,10 +20,7 @@ public class Question implements Serializable {
                     int answer, ArrayList<String> choices) {
         this.id = id;
         this.text = text;
-        if(imageURL != null)
-            this.imageURL = imageURL;
-        else
-            this.imageURL = " ";
+        this.imageURL = imageURL;
         this.answer = answer;
         this.choices = null;
     }

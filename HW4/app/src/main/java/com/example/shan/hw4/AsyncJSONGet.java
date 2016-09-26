@@ -37,15 +37,14 @@ public class AsyncJSONGet extends AsyncTask<String, Void, ArrayList<Question>> {
 
     @Override
     protected void onPreExecute() {
-
     }
 
     @Override
     protected ArrayList<Question> doInBackground(String... params) {
         String urlString = params[0];
+        ArrayList<Question> questions = new ArrayList<>();
 
         try {
-            ArrayList<Question> questions = new ArrayList<>();
             URL url = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -70,19 +69,18 @@ public class AsyncJSONGet extends AsyncTask<String, Void, ArrayList<Question>> {
                     int id = questionJSON.getInt("id");
                     String text = questionJSON.getString("text");
                     String imageUrl = questionJSON.getString("image");
-                    int answer = questionJSON.getInt("answer");
 
                     JSONObject choicesJSON = questionJSON.getJSONObject("choices");
+                    int answer = choicesJSON.getInt("answer");
                     JSONArray choiceArray = choicesJSON.getJSONArray("choice");
                     ArrayList<String> choices = new ArrayList<>();
 
                     for (int j = 0; j < choiceArray.length(); j++) {
                         choices.add(choiceArray.getString(j));
                     }
-                    questions.add(new Question(id, text, imageUrl, answer, choices);
-                }
 
-                return questions;
+                    questions.add(new Question(id, text, imageUrl, answer, choices));
+                }
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -92,21 +90,18 @@ public class AsyncJSONGet extends AsyncTask<String, Void, ArrayList<Question>> {
             e.printStackTrace();
         }
 
-        return null;
+        return questions;
     }
 
     @Override
     protected void onPostExecute(ArrayList<Question> result) {
         if (result != null) {
-            Log.d("demo", result.toString());
             // after fetching the trivia data, show trivia image and start trivia button
-
             activity.setupData(result);
             super.onPostExecute(result);
         } else {
             Log.d("demo", "null result");
         }
-
     }
 
     // allows access to mainactivity variables and methods
