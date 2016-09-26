@@ -22,7 +22,7 @@ public class Question implements Serializable {
         this.text = text;
         this.imageURL = imageURL;
         this.answer = answer;
-        this.choices = null;
+        this.choices = choices;
     }
 
     public int getId() {
@@ -43,6 +43,17 @@ public class Question implements Serializable {
 
     public ArrayList<String> getChoices() {
         return choices;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "text='" + text + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                ", id=" + id +
+                ", answer=" + answer +
+                ", choices=" + choices +
+                '}';
     }
 }
 

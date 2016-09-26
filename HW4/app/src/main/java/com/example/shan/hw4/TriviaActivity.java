@@ -23,7 +23,6 @@ public class TriviaActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     ImageView imageView;
     Button nextbutton;
-    ProgressDialog dialog;
 
     int numCorrect;
     int questionIndex = 0;
@@ -75,7 +74,8 @@ public class TriviaActivity extends AppCompatActivity {
         nextbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayQuestion(questionsList.get(++questionIndex));
+                if (questionIndex < questionsList.size() - 1)
+                    displayQuestion(questionsList.get(++questionIndex));
             }
         });
     }
@@ -87,15 +87,19 @@ public class TriviaActivity extends AppCompatActivity {
             imageView.setImageBitmap(null);
         }
 
+        Log.d("debug", "question=" + question.toString());
+
+        if (question.getChoices() != null) {
+            Log.d("debug", "Hurrah! " + question.getId());
+        } else {
+            Log.d("debug", ":(");
+        }
+
         /*for (int i = 0; i < question.getChoices().size(); i++) {
             RadioButton r = new RadioButton(this);
             String choice = question.getChoices().get(i);
 
             radioGroup.addView(r, i);
         }*/
-    }
-
-    public void dismissDialog() {
-        dialog.dismiss();
     }
 }

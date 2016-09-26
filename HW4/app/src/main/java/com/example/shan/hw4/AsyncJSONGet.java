@@ -81,6 +81,7 @@ public class AsyncJSONGet extends AsyncTask<String, Void, ArrayList<Question>> {
 
                     questions.add(new Question(id, text, imageUrl, answer, choices));
                 }
+
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -90,6 +91,9 @@ public class AsyncJSONGet extends AsyncTask<String, Void, ArrayList<Question>> {
             e.printStackTrace();
         }
 
+
+        Log.d("debug", "size=" + questions.size());
+
         return questions;
     }
 
@@ -98,7 +102,6 @@ public class AsyncJSONGet extends AsyncTask<String, Void, ArrayList<Question>> {
         if (result != null) {
             // after fetching the trivia data, show trivia image and start trivia button
             activity.setupData(result);
-            super.onPostExecute(result);
         } else {
             Log.d("demo", "null result");
         }
