@@ -9,4 +9,10 @@
     <string name="countdownTxt1">Time Left: 120 seconds</string>
     <string name="quitTxt">Quit</string>
     <string name="nextTxt">Next</string>
+    <string name="title_activity_stats">Stats</string>
+    <string name="triviaStatsTitle">Trivia Stats</string>
+    <string name="correctAnswers">Correct Answers</string>
+    <string name="answersResposne" />
+    <string name="tryAgainButton">Try Again</string>
+    <string name="correctAnswersPercent">0</string>
 </resources>

@@ -20,14 +20,19 @@ public class TriviaActivity extends AppCompatActivity {
 
     ArrayList<Question> questionsList;
     TextView countdownTextView;
+    TextView questionTextView;
+    TextView questionNumView;
     RadioGroup radioGroup;
     ImageView imageView;
-    Button nextbutton;
+    Button nextButton;
+    Button exitButton;
 
-    int numCorrect;
+    int numCorrect = 0;
+    int answer;
     int questionIndex = 0;
 
     final static String QUESTIONS_KEY = "questionsList";
+    final static String TOTAL_QUESTIONS = "totalQuestions";
     final static String NUMBER_CORRECT = "numberCorrect";
 
     @Override
@@ -38,15 +43,17 @@ public class TriviaActivity extends AppCompatActivity {
         countdownTextView = (TextView) findViewById(R.id.countdownTextView);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         imageView = (ImageView) findViewById(R.id.questionImageView);
-        nextbutton = (Button) findViewById(R.id.nextButton);
+        nextButton = (Button) findViewById(R.id.nextButton);
+        questionTextView = (TextView) findViewById(R.id.questionTextView);
+        questionNumView = (TextView) findViewById(R.id.questionNumTextView);
+        exitButton = (Button) findViewById(R.id.quitButton);
 
-        int numCorrect = 0;
         Bundle extras = getIntent().getExtras();
 
         if(getIntent().getExtras() != null) {
             if(extras.containsKey(MainActivity.QUESTIONS_KEY)){
                 questionsList = (ArrayList<Question>) extras.getSerializable(MainActivity.QUESTIONS_KEY);
-            } else{
+            } else {
                 Log.d("demo", "nothing passed");
             }
         }
@@ -58,24 +65,46 @@ public class TriviaActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                /*countdownTextView.setText("Time Has Expired!");
+                countdownTextView.setText("Time Has Expired!");
                 Intent triviaIntent = new Intent(TriviaActivity.this, Stats.class);
-                triviaIntent.putExtra(QUESTIONS_KEY, questionsList);
+                triviaIntent.putExtra(TOTAL_QUESTIONS, questionsList.size());
                 triviaIntent.putExtra(NUMBER_CORRECT, numCorrect);
-                startActivity(triviaIntent);*/
+                startActivity(triviaIntent);
                 finish();
             }
         };
+
+        questionIndex = questionsList.size() - 2;
 
         displayQuestion(questionsList.get(questionIndex));
 
         timer.start();
 
-        nextbutton.setOnClickListener(new View.OnClickListener() {
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (questionIndex < questionsList.size() - 1)
+                if (questionIndex < questionsList.size() - 1) {
+                    if (radioGroup.getCheckedRadioButtonId() == answer) {
+                        numCorrect++;
+                    }
                     displayQuestion(questionsList.get(++questionIndex));
+                } else {
+                    Intent triviaIntent = new Intent(TriviaActivity.this, Stats.class);
+                    triviaIntent.putExtra(TOTAL_QUESTIONS, questionsList.size());
+                    triviaIntent.putExtra(NUMBER_CORRECT, numCorrect);
+                    startActivity(triviaIntent);
+                }
+            }
+        });
+
+        // from MainActivity, exit to home screen on Exit Button press
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }
@@ -87,19 +116,20 @@ public class TriviaActivity extends AppCompatActivity {
             imageView.setImageBitmap(null);
         }
 
-        Log.d("debug", "question=" + question.toString());
+        questionNumView.setText("Q" + question.getId());
 
-        if (question.getChoices() != null) {
-            Log.d("debug", "Hurrah! " + question.getId());
-        } else {
-            Log.d("debug", ":(");
+        questionTextView.setText(question.getText());
+
+        radioGroup.removeAllViews();
+
+        for (int i = 0; i < question.getChoices().size(); i++) {
+            RadioButton r = new RadioButton(this);
+            r.setText(question.getChoices().get(i));
+            r.setId(i + 1);
+
+            radioGroup.addView(r);
         }
 
-        /*for (int i = 0; i < question.getChoices().size(); i++) {
-            RadioButton r = new RadioButton(this);
-            String choice = question.getChoices().get(i);
-
-            radioGroup.addView(r, i);
-        }*/
+        answer = question.getAnswer();
     }
 }

@@ -68,7 +68,11 @@ public class AsyncJSONGet extends AsyncTask<String, Void, ArrayList<Question>> {
 
                     int id = questionJSON.getInt("id");
                     String text = questionJSON.getString("text");
-                    String imageUrl = questionJSON.getString("image");
+
+                    String imageUrl = null;
+
+                    if (questionJSON.has("image"))
+                        imageUrl = questionJSON.getString("image");
 
                     JSONObject choicesJSON = questionJSON.getJSONObject("choices");
                     int answer = choicesJSON.getInt("answer");
