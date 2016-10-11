@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("city", city);
                     intent.putExtra("state", state);
                     // generate url
-                    String url = "http://api.wunderground.com/api/d7cefb706562c221/q/"+ state + "/" + city + ".json";
+                    String url = "http://api.wunderground.com/d7cefb706562c221/hourly/q/"+ state + "/" + city + ".json";
                     intent.putExtra("url", url);
                     startActivity(intent);
                 }

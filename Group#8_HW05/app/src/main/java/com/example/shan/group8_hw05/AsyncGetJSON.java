@@ -39,6 +39,7 @@ public class AsyncGetJSON extends AsyncTask<String, Void, ArrayList<Weather>> {
     protected ArrayList<Weather> doInBackground(String... params) {
         String urlString = params[0];
         ArrayList<Weather> weathers = new ArrayList<>();
+        Log.d("demo", urlString);
 
         try {
             URL url = new URL(urlString);
@@ -57,8 +58,8 @@ public class AsyncGetJSON extends AsyncTask<String, Void, ArrayList<Weather>> {
                 }
 
                 JSONObject weatherJSONObj = new JSONObject((sb.toString()));
-                JSONObject arrayJSONObj = weatherJSONObj.getJSONObject("array");
-                JSONArray hourlyForecast = arrayJSONObj.getJSONArray("hourly_forecast");
+                //JSONObject arrayJSONObj = weatherJSONObj.getJSONObject("array");
+                JSONArray hourlyForecast = weatherJSONObj.getJSONArray("hourly_forecast");
 
                 //JSONObject podcastsJSONObj = new JSONObject(sb.toString());
                 //JSONObject feedJSONObj = podcastsJSONObj.getJSONObject("feed");
