@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Weather App</string>
+    <string name="cityTxt">City (i.e. Charlotte)</string>
+    <string name="stateTxt">State (i.e. NC)</string>
+    <string name="submitTxt">Submit</string>
+</resources>
