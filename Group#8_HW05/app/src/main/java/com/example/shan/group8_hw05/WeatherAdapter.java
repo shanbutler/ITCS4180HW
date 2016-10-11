@@ -46,9 +46,13 @@ public class WeatherAdapter extends ArrayAdapter<Weather>
         TextView timeTextView = (TextView) convertView.findViewById(R.id.timeTextView);
             TextView conditionTextView = (TextView) convertView.findViewById(R.id.conditionTextView);
             TextView tempTextView = (TextView) convertView.findViewById(R.id.tempTextView);
+            timeTextView.setText(weather.time);
+            conditionTextView.setText(weather.clouds);
+            tempTextView.setText(weather.temperature + "°F");
 
         new AsyncGetImage(imageView, this.mContext).execute(weather.getIconUrl());
         return convertView;
-        //return super.getView(position, convertView, parent);
+
+            //return super.getView(position, convertView, parent);
     }
 }

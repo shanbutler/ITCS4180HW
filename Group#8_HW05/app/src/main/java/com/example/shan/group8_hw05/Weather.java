@@ -19,7 +19,7 @@ public class Weather {
                    String windSpeed, String windDirection, String climateType, String humidity,
                    String feelsLike, String maximumTemp, String minimumTemp, String pressure) {
 
-        this.time = time;
+        this.time = time.substring(0, time.indexOf('E'));
         this.temperature = temperature;
         this.dewpoint = dewpoint;
         this.clouds = clouds;
