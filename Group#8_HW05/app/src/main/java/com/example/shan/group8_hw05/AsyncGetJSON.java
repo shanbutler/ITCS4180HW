@@ -69,7 +69,7 @@ public class AsyncGetJSON extends AsyncTask<String, Void, ArrayList<Weather>> {
                 for (int i = 0; i < hourlyForecast.length(); i++) {
 
                     String time, temperature, dewpoint, clouds, iconUrl,
-                            windSpeed, windDirection, climateType, humidity,
+                            windSpeed, windDirection, windDirection1, windDirection2, climateType, humidity,
                             feelsLike, maximumTemp, minimumTemp, pressure;
 
                     JSONObject itemsObj = hourlyForecast.getJSONObject(i);
@@ -97,7 +97,9 @@ public class AsyncGetJSON extends AsyncTask<String, Void, ArrayList<Weather>> {
                     clouds = itemsObj.getString("condition");
                     iconUrl = itemsObj.getString("icon_url");
                     windSpeed = windSpeedObj.getString("english");
-                    windDirection = winddirObj.getString("dir");
+                    windDirection1 = winddirObj.getString("degrees");
+                    windDirection2 = winddirObj.getString("dir");
+                    windDirection = windDirection1 + "° " + windDirection2;
                     climateType = itemsObj.getString("wx");
                     humidity = itemsObj.getString("humidity");
                     feelsLike = feelsLikeObj.getString("english");

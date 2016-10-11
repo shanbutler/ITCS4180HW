@@ -64,7 +64,9 @@ public class CityWeather extends AppCompatActivity implements AsyncGetJSON.IData
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                                                Intent i = new Intent(CityWeather.this, DetailsActivity.class);
+                                                i.putExtra("weather", weathers.get(position));
+                                                startActivity(i);
                                             }
 
 

@@ -1,5 +1,9 @@
 package com.example.shan.group8_hw05;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * HW 05
  * Akhil Ramlakan
@@ -8,7 +12,7 @@ package com.example.shan.group8_hw05;
  dewpoint, clouds, iconUrl, windSpeed, windDirection, climateType, humidity,
  feelsLike, maximumTemp, minimumTemp and pressure.
  */
-public class Weather {
+public class Weather implements Serializable{
 
     String time, temperature, dewpoint, clouds, iconUrl, windSpeed, windDirection, climateType,
         humidity, feelsLike, maximumTemp, minimumTemp, pressure;
