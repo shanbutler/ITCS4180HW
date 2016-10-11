@@ -20,6 +20,7 @@ public class CityWeather extends AppCompatActivity implements AsyncGetJSON.IData
     ProgressDialog dialog;
     String city, state, strUrl;
     ArrayList<Weather> weathers;
+    TextView currentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,9 @@ public class CityWeather extends AppCompatActivity implements AsyncGetJSON.IData
             city = getIntent().getExtras().getString("city");
         }
 
+        currentLocation = (TextView) findViewById(R.id.currentLocTextView);
+        currentLocation.setText("Current Location: " + city + ", " + state);
+
         // set up loading message
         dialog = new ProgressDialog(CityWeather.this);
         dialog.setMessage("Loading Hourly Data");
@@ -44,37 +48,29 @@ public class CityWeather extends AppCompatActivity implements AsyncGetJSON.IData
         new AsyncGetJSON(CityWeather.this).execute(strUrl);
 
 
-
     }
 
     public void setupData(ArrayList<Weather> result)
     {
-
         dialog.dismiss();
         weathers = result;
 
-        /*
         ListView listview = (ListView) findViewById(R.id.listView);
 
-        PodcastAdapter adapter = new PodcastAdapter(this, R.layout.row_item_layout, podcasts);
+        WeatherAdapter adapter = new WeatherAdapter(this, R.layout.hourly_data, weathers);
         listview.setAdapter(adapter);
-
         adapter.setNotifyOnChange((true)); // automatically updates on changes
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                                // click on it, get its position in array
-                                                Log.d("demo", "Position: " + position + ", Value: " + podcasts.get(position));
 
-                                                Intent intent = new Intent(MainActivity.this, ItemDetails.class);
-                                                intent.putExtra(PODCASTS_KEY, podcasts.get(position));
-                                                startActivity(intent);
                                             }
 
 
                                         }
         );
-*/
+
 
     }
 }

@@ -13,6 +13,8 @@ public class Weather {
     String time, temperature, dewpoint, clouds, iconUrl, windSpeed, windDirection, climateType,
         humidity, feelsLike, maximumTemp, minimumTemp, pressure;
 
+
+
     public Weather(String time, String temperature, String dewpoint, String clouds, String iconUrl,
                    String windSpeed, String windDirection, String climateType, String humidity,
                    String feelsLike, String maximumTemp, String minimumTemp, String pressure) {
@@ -31,7 +33,9 @@ public class Weather {
         this.minimumTemp = minimumTemp;
         this.pressure = pressure;
     }
-
+    public String getIconUrl() {
+        return iconUrl;
+    }
     @Override
     public String toString() {
         return "Time: " + time + " Temperature: " + temperature;
